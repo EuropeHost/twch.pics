@@ -33,6 +33,7 @@ class AuthController extends Controller
         ], [
             'name' => $twitchUser->getName(),
             'email' => $twitchUser->getEmail(),
+            'avatar' => $twitchUser->getAvatar(),
             'twitch_token' => $twitchUser->token,
             'twitch_refresh_token' => $twitchUser->refreshToken,
         ]);

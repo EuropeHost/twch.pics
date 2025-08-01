@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +24,7 @@ class User extends Authenticatable
         'twitch_id',
         'twitch_token',
         'twitch_refresh_token',
+        'avatar', // Added 'avatar' here
     ];
 
     /**
@@ -42,6 +44,8 @@ class User extends Authenticatable
      */
     protected $keyType = 'string';
 
+    public $incrementing = false;
+
     protected static function boot()
     {
         parent::boot();
@@ -51,8 +55,27 @@ class User extends Authenticatable
         });
     }
 
-    public function getIncrementing(): bool
+    /**
+     * Get the clips shared by the user.
+     */
+    public function clips()
     {
-        return false;
+        return $this->hasMany(Clip::class);
+    }
+
+    /**
+     * Get the votes cast by the user.
+     */
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
+
+    /**
+     * Get the comments made by the user.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class); // For later
     }
 }
