@@ -4,12 +4,12 @@
 >
     <div class="flex lg:flex-1">
         <a href="/" class="-m-1.5 p-1.5">
-            <span class="sr-only">twch.pics</span>
-            <img
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+            <span class="text-lg font-bold text-purple-600 hover:text-purple-500">twch.pics</span>
+            <!--img
+                src="{{ asset('img/logo.png') }}"
                 alt="twch.pics logo"
-                class="h-8 w-auto"
-            />
+                class="h-24 w-auto"
+            /-->
         </a>
     </div>
     <div class="flex lg:hidden">
