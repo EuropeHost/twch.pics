@@ -7,6 +7,7 @@ use App\Http\Controllers\Clips\SubmitController as ClipsSubmitController;
 use App\Http\Controllers\Clips\ViewController as ClipsViewController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'lander']);
@@ -34,4 +35,11 @@ Route::middleware('auth')->group(function () {
         Route::post('/{clip}/comments', [ClipsCommentController::class, 'store'])->name('comments.store');
         Route::delete('/{clip}/comments/{comment}', [ClipsCommentController::class, 'destroy'])->name('comments.destroy');
     });
+});
+
+Route::prefix('users/{userTwitchId}')->name('users.')->group(function () {
+    Route::get('/', [UserController::class, 'showAllClips'])->name('profile');
+    Route::get('/broadcasted', [UserController::class, 'showBroadcastedClips'])->name('broadcasted');
+    Route::get('/clipped', [UserController::class, 'showClippedClips'])->name('clipped');
+    Route::get('/submitted', [UserController::class, 'showSubmittedClips'])->name('submitted');
 });

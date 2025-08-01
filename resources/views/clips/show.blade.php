@@ -1,4 +1,3 @@
-<!-- resources/views/clips/show.blade.php -->
 @extends('layouts.main')
 
 @section('content')
@@ -12,22 +11,40 @@
                 <img src="{{ $clip->broadcaster_profile_image_url }}" alt="{{ $clip->broadcaster_name }}"
                     class="w-8 h-8 rounded-full" />
                 @endif
-                <span>From: <strong class="text-purple-600">{{ $clip->broadcaster_name }}</strong></span>
+                <span>
+                    From:
+                    <a href="{{ route('users.broadcasted', $clip->broadcaster_twitch_id) }}"
+                        class="font-medium text-purple-600 hover:underline">
+                        {{ $clip->broadcaster_name }}
+                    </a>
+                </span>
 
                 @if ($clip->clipper_profile_image_url)
                 <img src="{{ $clip->clipper_profile_image_url }}" alt="{{ $clip->clipper_name }}"
                     class="w-8 h-8 rounded-full" />
                 @endif
-                <span>Clipped by: <strong>{{ $clip->clipper_name }}</strong></span>
+                <span>
+                    Clipped by:
+                    <a href="{{ route('users.clipped', $clip->clipper_twitch_id) }}"
+                        class="font-medium text-blue-600 hover:underline">
+                        {{ $clip->clipper_name }}
+                    </a>
+                </span>
             </div>
 
             <div class="mb-4 text-gray-600 text-sm">
-                <p>Submitted by:
-                    <a href="#" class="text-blue-600 hover:underline">
+                @if ($clip->user)
+                <p>
+                    Submitted by:
+                    <a href="{{ route('users.submitted', $clip->user->twitch_id) }}"
+                        class="text-green-600 hover:underline">
                         {{ $clip->user->name }}
                     </a>
                     on {{ $clip->created_at->format('M d, Y H:i') }}
                 </p>
+                @else
+                <p>Submitted on {{ $clip->created_at->format('M d, Y H:i') }}</p>
+                @endif
                 <p>Views: <span class="font-medium">{{ number_format($clip->views) }}</span></p>
             </div>
         </div>
