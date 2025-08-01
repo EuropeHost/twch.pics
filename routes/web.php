@@ -6,6 +6,7 @@ use App\Http\Controllers\Clips\RateController as ClipsRateController;
 use App\Http\Controllers\Clips\SubmitController as ClipsSubmitController;
 use App\Http\Controllers\Clips\ViewController as ClipsViewController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -35,9 +36,17 @@ Route::middleware('auth')->group(function () {
         Route::post('/{clip}/comments', [ClipsCommentController::class, 'store'])->name('comments.store');
         Route::delete('/{clip}/comments/{comment}', [ClipsCommentController::class, 'destroy'])->name('comments.destroy');
     });
+
+    Route::prefix('leaderboards')->name('leaderboards.')->group(function () {
+        Route::get('/', [LeaderboardController::class, 'index'])->name('index');
+        Route::get('/clips', [LeaderboardController::class, 'topClips'])->name('clips');
+        Route::get('/broadcasters', [LeaderboardController::class, 'topBroadcasters'])->name('broadcasters');
+        Route::get('/clippers', [LeaderboardController::class, 'topClippers'])->name('clippers');
+        Route::get('/submitters', [LeaderboardController::class, 'topSubmitters'])->name('submitters');
+    });
 });
 
-Route::prefix('users/{userTwitchId}')->name('users.')->group(function () {
+Route::prefix('users/{user}')->name('users.')->group(function () {
     Route::get('/', [UserController::class, 'showAllClips'])->name('profile');
     Route::get('/broadcasted', [UserController::class, 'showBroadcastedClips'])->name('broadcasted');
     Route::get('/clipped', [UserController::class, 'showClippedClips'])->name('clipped');

@@ -3,13 +3,9 @@
     class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8 relative z-50"
 >
     <div class="flex lg:flex-1">
-        <a href="/" class="-m-1.5 p-1.5">
+        <a href="{{ url('/') }}" class="-m-1.5 p-1.5">
             <span class="text-lg font-bold text-purple-600 hover:text-purple-500">twch.pics</span>
-            <!--img
-                src="{{ asset('img/logo.png') }}"
-                alt="twch.pics logo"
-                class="h-24 w-auto"
-            /-->
+            <!-- <img src="{{ asset('img/logo.png') }}" alt="twch.pics logo" class="h-24 w-auto" /> -->
         </a>
     </div>
     <div class="flex lg:hidden">
@@ -41,8 +37,8 @@
         <a href="#features" class="text-sm/6 font-semibold text-gray-900"
             >Features</a
         >
-        <a href="#" class="text-sm/6 font-semibold text-gray-900">Clips</a>
-        <a href="#" class="text-sm/6 font-semibold text-gray-900"
+        <a href="{{ route('clips.index') }}" class="text-sm/6 font-semibold text-gray-900">Clips</a>
+        <a href="{{ route('leaderboards.index') }}" class="text-sm/6 font-semibold text-gray-900"
             >Leaderboards</a
         >
     </div>
@@ -129,7 +125,7 @@
             class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
         >
             <div class="flex items-center justify-between">
-                <a href="#" class="-m-1.5 p-1.5">
+                <a href="{{ url('/') }}" class="-m-1.5 p-1.5">
                     <span class="sr-only">twch.pics</span>
                     <img
                         src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
@@ -170,12 +166,12 @@
                             >Features</a
                         >
                         <a
-                            href="#"
+                            href="{{ route('clips.index') }}"
                             class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                             >Clips</a
                         >
                         <a
-                            href="#"
+                            href="{{ route('leaderboards.index') }}"
                             class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                             >Leaderboards</a
                         >
