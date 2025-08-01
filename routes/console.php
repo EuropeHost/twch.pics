@@ -10,4 +10,4 @@ Artisan::command('inspire', function () {
 
 
 
-Schedule::command('nightwatch:agent')->everyMinute();
+Schedule::command('nightwatch:agent')->cron('* * * * *');
