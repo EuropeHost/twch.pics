@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -20,7 +20,9 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
+        'twitch_id',
+        'twitch_token',
+        'twitch_refresh_token',
     ];
 
     /**
@@ -29,20 +31,28 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'twitch_token',
+        'twitch_refresh_token',
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The "type" of the primary key.
      *
-     * @return array<string, string>
+     * @var string
      */
-    protected function casts(): array
+    protected $keyType = 'string';
+
+    protected static function boot()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->{$model->getKeyName()} = (string) Str::uuid();
+        });
+    }
+
+    public function getIncrementing(): bool
+    {
+        return false;
     }
 }
