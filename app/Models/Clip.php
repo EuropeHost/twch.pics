@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Clip extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $keyType = 'string';
     public $incrementing = false;
@@ -27,14 +28,17 @@ class Clip extends Model
         'clipper_profile_image_url',
         'user_id',
     ];
-
+    
+    /*
     protected static function boot()
     {
         parent::boot();
+
         static::creating(function ($model) {
             $model->{$model->getKeyName()} = (string) Str::uuid();
         });
     }
+    */
 
     public function user()
     {
@@ -48,6 +52,6 @@ class Clip extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class); // For later
+        return $this->hasMany(Comment::class);
     }
 }

@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Clips\CommentController as ClipsCommentController;
+use App\Http\Controllers\Clips\RateController as ClipsRateController;
 use App\Http\Controllers\Clips\SubmitController as ClipsSubmitController;
+use App\Http\Controllers\Clips\ViewController as ClipsViewController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +20,18 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [DashboardController::class, 'overview'])->name('overview');
     });
 
-    Route::get('/clips/submit', [ClipsSubmitController::class, 'create'])->name('clips.create');
-    Route::post('/clips', [ClipsSubmitController::class, 'store'])->name('clips.store');
+    Route::prefix('clips')->name('clips.')->group(function () {
+        Route::get('/submit', [ClipsSubmitController::class, 'create'])->name('create');
+        Route::post('/', [ClipsSubmitController::class, 'store'])->name('store');
+
+        Route::get('/', [ClipsViewController::class, 'index'])->name('index');
+        Route::get('/{clip}', [ClipsViewController::class, 'show'])->name('show');
+        Route::get('/broadcaster/{broadcasterTwitchId}', [ClipsViewController::class, 'showByBroadcaster'])->name('by-broadcaster');
+        Route::get('/game/{gameId}', [ClipsViewController::class, 'showByGame'])->name('by-game');
+
+        Route::post('/{clip}/vote', [ClipsRateController::class, 'vote'])->name('vote');
+
+        Route::post('/{clip}/comments', [ClipsCommentController::class, 'store'])->name('comments.store');
+        Route::delete('/{clip}/comments/{comment}', [ClipsCommentController::class, 'destroy'])->name('comments.destroy');
+    });
 });
