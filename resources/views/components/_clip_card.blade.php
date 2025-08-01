@@ -81,7 +81,7 @@
                 </span>
                 <i class="bi bi-arrow-up-circle-fill text-green-500"></i>
                 <i class="bi bi-arrow-down-circle-fill text-red-500"></i>
-                <span class="text-sm text-gray-500">not votable</span>
+                <span class="text-sm text-gray-500">view to vote</span>
             </div>
             <a
                 href="{{ route('clips.show', $clip->id) }}"
